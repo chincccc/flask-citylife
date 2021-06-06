@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <a href="/message_list/2">
+        <div class="alert alert-primary" role="alert">
+          新的关注<span class="badge badge-secondary float-right">{{ cnt[2] }}</span>
+        </div>
+        </a>
+        <a href="/message_list/1">
+        <div class="alert alert-success" role="alert">
+          新的回复<span class="badge badge-secondary float-right">{{ cnt[1] }}</span>
+        </div>
+        </a>
+        <a href="/message_list/3">
+        <div class="alert alert-success" role="alert">
+          新的获赞<span class="badge badge-secondary float-right">{{ cnt[3] }}</span>
+        </div>
+        </a>
+        <div class="alert alert-light" role="alert">私信</div>
+        {% for key, value in uidlist_new.items() %}
+          {% for user in users %}
+            {% if key==user.uid %}
+              <a href="/chat/{{ user.uid }}">
+                <div class="alert alert-warning" role="alert">{{ user.account }}<span
+                        class="badge badge-secondary float-right">{{ value }}</span></div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {% for key, value in uidlist_old.items() %}
+          {% for user in users %}
+            {% if key==user.uid %}
+              {% if value!=-1 %}
+                <a href="/chat/{{ user.uid }}">
+                  <div class="alert alert-warning" role="alert">{{ user.account }}<span
+                          class="badge badge-secondary float-right">0</span></div>
+                </a>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

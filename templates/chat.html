@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8" style="padding-bottom: 190px;">
+        <h1>{{ account }}</h1><!--聊天对象用户名-->
+        <div id="reload"><!--js实现2秒自动刷新该div，已达到自动接收信息-->
+          {% for message in messages %}<!--遍历消息列表-->
+            {% if message.send_id==current_user.uid %}<!--如果信息发送者是登录用户，则将该消息显示在右侧-->
+              <div class="clearfix"></div>
+              <div class="alert alert-success text-right float-right" role="alert">
+                {{ message.mess_content }}<br>{{ message.send_time }}
+              </div>
+            {% else %}<!--否则将该消息显示在左侧-->
+              <div class="clearfix"></div>
+              <div class="alert alert-warning text-left float-left" role="alert">
+                {{ message.mess_content }}
+                {% if message.read_state!=0 %}<!--如果该消息是未读信息，则显示new徽标-->
+                  <span class="badge badge-secondary float-right">new</span>
+                {% endif %}
+                <br>{{ message.send_time }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="d-none d-md-block"
+             style="position:fixed;z-index:101;right:0;top:0;margin-top: 130px;width: 40px;margin-right: 70px;">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#message_box">
+            <span class="	glyphicon glyphicon-envelope"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script type="text/javascript">
+      $(function () {
+          setInterval(function () {
+              $("#reload").load(location.href + " #reload");
+          }, 2000);
+      })
+
+  </script>/div>
+  {{ super() }}
+  <div class="modal fade" id="message_box" tabindex="-1" role="dialog" aria-labelledby="message_input"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="message_input">发送消息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <input type="text" id="chat_text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="send">发送</button>
+            </div>
+          </div>
+        </div>
+          <span id="other" style="display:none;">{{ user_id }}</span>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      $(function () {
+          $("#send").click(function () {
+              console.log($("#chat_text").val());
+              $.post("/chat_put/", {DATA: $("#chat_text").val(),OTHER:$("#other").text()}, function (data, status) {
+              });
+          });
+      });
+  </script>
+{% endblock %}

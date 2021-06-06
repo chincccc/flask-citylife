@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8">
+        <table class="table table-bordered">
+          {% for message in messages %}
+            <a href="/get_article/{{ message.mess_id }}">{{ message.mess_content }}</a>({{ message.send_time }})
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

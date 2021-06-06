@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+      <h1>{{ type }}</h1>
+      <button type="button" class="btn btn-success" onclick="location='/pass_change/'">修改密码</button>
+      {% for login_log in login_logs %}
+          <div class="alert alert-warning" role="alert">
+            {{ login_log.login_ip }}<span class="float-right">{{ login_log.login_time }}</span>
+          </div>
+      {% endfor %}
+
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

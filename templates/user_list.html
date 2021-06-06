@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+      <h1>{{ type }}</h1>
+      {% for user in users %}
+        <a href="/user_more/{{ user.uid }}">
+          <div class="alert alert-warning" role="alert">
+            <img src="{{ user.tx_link }}" class="float-left img-fluid rounded-circle" width="30px"
+                     style="margin-right:10px;"/>{{ user.account }}
+          </div>
+        </a>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

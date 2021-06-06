@@ -1,0 +1,13 @@
+Flask_Bootstrap4==4.0.2
+Flask_Login==0.5.0
+Flask==1.1.2
+Werkzeug==1.0.1
+Flask_CKEditor==0.4.4.1
+Markdown==2.6.11
+WTForms==2.1
+SQLAlchemy==1.2.7
+itsdangerous==0.24
+Flask_WTF==0.14.3
+Flask_SQLAlchemy==2.4.4
+flask_bootstrap==3.3.7.1
+Pillow==8.2.0

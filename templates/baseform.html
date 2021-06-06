@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container" style="padding-top:50px;">
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6">
+
+        <!--<link type="text/css" href="../static/css/sample.css" rel="stylesheet" media="screen" />-->
+
+
+        <div class='center-block'><h1>{{ tit }}</h1></div>
+        <div>
+
+          {% if flag!=null %}
+            <input type="range" class="form-control-range" id="formControlRange">
+            <div id="eition"></div>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name="file" id="imgFile" onchange="_eition.openFile(this)">
+                <label class="custom-file-label" for="imgFile">选择照片</label>
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" value="保存" name="save" id="save" onclick="save()">确认裁切</button>
+              </div>
+            </div>
+            <hr>
+
+            <script>
+                var divw = 330;
+                $(function () {
+                    $('#formControlRange').bind('input propertychange', function () {
+                        divw = 350 + Number(($(this).val() - 70) * 3.5);
+                        if (Number(divw) > 400)
+                            divw = 400;
+                        $(".drag").remove();
+                        _eition.el = "eition";
+                        _eition.width = 400;//操作面的宽度
+                        _eition.height = 400;//操作面的高度
+                        _eition._width = divw;//截图框的宽度
+                        _eition._height = divw;//截图框的高度
+                        //是否显示缩略图。样式自己写吧
+                        _eition.start();
+                        $(".drag").mousedown();
+                        $(".drag").mouseup();
+                    });
+                })
+                _eition.el = "eition";
+                _eition.width = 400;//操作面的宽度
+                _eition.height = 400;//操作面的高度
+                _eition._width = divw;//截图框的宽度
+                _eition._height = divw;//截图框的高度
+                _eition.thumbEl = "thumb";//是否显示缩略图。样式自己写吧
+                _eition.start();
+
+                function save() {
+                    console.log(_eition.result());
+                    document.getElementById("tx_input").value = _eition.result();
+                }
+            </script>
+            {% if flag=='user' %}
+              <div class="datepickerContainer">
+                <label class="control-label" for="birthday">出生日期</label>
+                <p type="text" readonly="readonly" class="date-picker date-picker-type" id="date_"
+                   style="width: 200px;"></p>
+              </div>
+            {% endif %}
+          {% endif %}
+          {{ wtf.quick_form(form) }}<!--接收来自后台的表单样式-->
+          {% if tit=="登录" %}
+            <button type="button" class="btn btn-warning" onclick="location='/pass_forget/'" style="margin-top: 5px;">忘记密码</button>
+          {% endif %}
+        </div>
+        <p>{{ tip }}</p>
+      </div>
+
+      <script src="../static/js/ckeditor.js"></script>
+      <script src="../static/js/zh-cn.js"></script>
+      <script>
+          ClassicEditor
+              .create(document.querySelector('#editor'), {
+                  toolbar: ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload'],
+                  heading: {
+                      options: [
+                          {model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
+                          {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
+                          {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'}
+                      ]
+                  },
+                  ckfinder: {
+                      uploadUrl: "{{url_for('article.img')}}"
+                  },
+                  language: 'zh-cn'
+              })
+              .then(editor => {
+                  console.log(editor);
+              })
+              .catch(error => {
+                  console.error(error);
+              })
+      </script>
+
+      <script>
+          var datePicker = document.getElementsByClassName('date-picker')[0];
+          var body = document.body;
+          new DatePicker(body, datePicker, false, 0, function (inputVal) {
+              document.getElementById("date_input").value = inputVal;
+          })
+
+          function newdate() {
+              alert("请点击上方日期选择框进行")
+          }
+
+      </script>
+
+    </div>
+  </div>
+
+  {{ super() }}
+
+{% endblock %}

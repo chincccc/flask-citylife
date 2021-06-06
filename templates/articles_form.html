@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container" style="padding-top:50px;">
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6">
+        <main>
+          <form action="/add_article" method="post" class="centered">
+                  <textarea name="content" id="editor">
+                  </textarea>
+            <p><input type="submit" value="提交"></p>
+          </form>
+        </main>
+        <script src="../static/js/ckeditor.js"></script>
+        <script src="../static/js/zh-cn.js"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', '|', 'undo', 'redo'],
+                    heading: {
+                        options: [
+                            {model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
+                            {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
+                            {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'}
+                        ]
+                    },
+                    ckfinder: {
+                        uploadUrl: "http://127.0.0.1:5000/img"
+                    },
+                    language: 'zh-cn'
+                })
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        </script>
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

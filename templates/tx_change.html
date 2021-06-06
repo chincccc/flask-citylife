@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container" style="padding-top:50px;">
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6">
+        <input type="range" class="form-control-range" id="formControlRange">
+
+        <div id="eition"></div>
+        <input type="file" name="file" id="imgFile" onchange="_eition.openFile(this)"/>
+        <input type="button" value="保存" name="save" id="save" onclick="save()">
+        <hr>
+        <img id="thumb">
+
+        <script>
+            var divw = 330;
+            $(function () {
+                $('#formControlRange').bind('input propertychange', function () {
+                    divw = 350 + Number(($(this).val() - 70) * 3.5);
+                    if (Number(divw) > 400)
+                        divw = 400;
+                    $(".drag").remove();
+                    $("#drag").remove();
+                    _eition.el = "eition";
+                    _eition.width = 400;//操作面的宽度
+                    _eition.height = 400;//操作面的高度
+                    _eition._width = divw;//截图框的宽度
+                    _eition._height = divw;//截图框的高度
+                    _eition.thumbEl = "thumb";//是否显示缩略图。样式自己写吧
+                    _eition.start();
+                });
+            })
+            _eition.el = "eition";
+            _eition.width = 400;//操作面的宽度
+            _eition.height = 400;//操作面的高度
+            _eition._width = divw;//截图框的宽度
+            _eition._height = divw;//截图框的高度
+            _eition.thumbEl = "thumb";//是否显示缩略图。样式自己写吧
+            _eition.start();
+
+            function save() {
+                console.log(_eition.result());
+            }
+
+        </script>
+
+      </div>
+      <p>{{ tip }}</p>
+    </div>
+
+  </div>
+  </div>
+
+  {{ super() }}
+
+{% endblock %}

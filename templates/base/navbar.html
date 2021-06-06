@@ -1,0 +1,76 @@
+{% block navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top line-block shadow" style="position: sticky;">
+    <a class="navbar-brand" href="/index_re">阿拉宁波</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            {% if current_user.is_authenticated %}
+              <img src="{{ current_user.tx_link }}" class="float-left img-fluid rounded-circle" width="30px"
+                   style="margin-right:10px;"/>{{ current_user.account }}
+            {% else %}用户{% endif %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="min-width: unset;text-align:left;">
+            {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="/user_self/">关于{{ current_user.account }}的</a>
+              <a class="dropdown-item" href="/manage_article/">我发布的</a>
+              <a class="dropdown-item" href="/all_login_log/">安全中心</a>
+              <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">登出</a>
+            {% else %}
+              <a class="dropdown-item" href="/email_up/">注册</a>
+              <a class="dropdown-item" href="/login_in/">登录</a>
+            {% endif %}
+          </div>
+
+
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="login_out_box" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            板块
+          </a>
+          <div class="dropdown-menu" style="min-width: unset" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">生活分享</a>
+            <a class="dropdown-item" href="#">好物安利</a>
+            <a class="dropdown-item" href="#">城建交流</a>
+            <a class="dropdown-item" href="#">政府公文</a>
+            <a class="dropdown-item" href="#">失物招领</a>
+            <a class="dropdown-item" href="#">二手交易</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/all_message/">消息
+            {% if current_user.is_authenticated %}
+                <span class="badge badge-secondary">{{ current_user.mess_cnt }}</span></a>
+            {% endif %}
+          </a>
+        </li>
+      </ul>
+      <div id="nav-right">
+
+
+        <form class="form-inline" action="/seach/" name="seach" method="post">
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="seach_type">
+            <option selected="1" value="1">帖子</option>
+            <option value="2">用户</option>
+          </select>
+          <input name='content' class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="在此输入">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="">搜索</button>
+        </form>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+{% endblock navbar %}

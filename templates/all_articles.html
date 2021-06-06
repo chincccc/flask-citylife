@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% block content %}
+  <div>
+    <div class="d-none d-md-block" style="padding-top:18px;"></div>
+
+
+    <div class="d-none d-md-block mx-auto"><!--PC-->
+      <div class="row">
+        <div class="col-md-8">
+          {% for article in articles %}<!--枚举帖子-->
+            <div class="{{ article.article_id }} card mb-3 img_main shadow"
+                 style="max-width: 650px;margin-top: 30px;border:0px solid;border-radius:15px;padding: 8px;">
+              <div class="row no-gutters">
+                <div class="col-md-4 img_main" id="img_box"
+                     style="text-align: center;overflow: hidden;max-width: 175px;max-height: 180px;border:0px solid;border-radius:15px;">
+                  <img class="blog_img" src="{{ article.article_url }}" alt="Card image cap"
+                       style="height: 100%;width: auto;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body" style="height: 50px;"><h5 class="card-title">
+                    {% for user in users %}
+                      {% if user.uid == article.user_id %}
+                        <a href="/user_more/{{ article.user_id }}"><img src="{{ user.tx_link }}"
+                                                                        class="float-left img-fluid img-thumbnail rounded-circle"
+                                                                        width="50px" style="margin-right:10px;"/></a>
+                        <!--楼主头像-->
+                      {% endif %}
+                    {% endfor %}
+                    <a href="/get_article/{{ article.article_id }}"
+                       style="text-decoration:none;text-align:left;">{{ article.article_title }}</a></h5><!--帖子标题-->
+                    <div class="clearfix"></div>
+                    <div style="height: 45px;margin-bottom: 5px;"><a href="/get_article/{{ article.article_id }}"
+                                                                     style="text-decoration:none;"><p
+                            class="card-text">{{ article.text_summ(40)|safe }}...</p></a></div><!--帖子正文缩略-->
+                    <div class="btn-group float-left" role="group"
+                         style="margin-top:15px;border:1px solid;border-radius:5px;" aria-label="Basic example">
+                      <button type="button" class="btn btn-dark" style="padding: 0px;">
+                        <a id="aadd{{ article.article_id }}" href="#" onclick="add_article_sc();return false;">
+                          <span id="padd{{ article.article_id }}"
+                                style="padding: 10px;padding-right: 7px;padding-left: 7px;width:4rem;"
+                                class="glyphicon glyphicon-heart-empty text-white"
+                                style="color:#1b1e21;">{{ article.article_sc }}</span>
+                        </a>
+                        <a id="acut{{ article.article_id }}" style="display: none;" href="#"
+                           onclick="cut_article_sc();return false;">
+                          <span id="pcut{{ article.article_id }}"
+                                style="padding: 10px;padding-right: 7px;padding-left: 7px;width:3.5rem;"
+                                class="glyphicon glyphicon-heart text-white"
+                                style="color:#1b1e21;">{{ article.article_sc }}</span>
+                        </a>
+                      </button>
+                      <button type="button" class="btn btn-light disabled"><a><span class="glyphicon glyphicon-pencil"
+                                                                                    style="color:#1b1e21;">{{ article.article_pl }}</span></a>
+                      </button>
+                      <button type="button" class="btn btn-light disabled"><a><span class="glyphicon glyphicon-eye-open"
+                                                                                    style="color:#1b1e21;">{{ article.article_read_cnt }}</span></a>
+                      </button>
+                      <div class="d-none d-lg-block " style="height: 15px;padding: 5px;"><p class="card-text"
+                                                                                            style="vertical-align: bottom;text-align: end;">
+                        <small class="text-muted">{{ article.article_date }}</small></p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="col-md-4" style="margin-top: 30px;">
+          <div id="carouselExampleIndicators" class="carousel slide shadow" data-ride="carousel"
+               style="border:0px solid;border-radius:15px;">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" style="border:0px solid;border-radius:15px;">
+              <div class="carousel-item active">
+                <img src="../static/img/1.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../static/img/2.png" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../static/img/3.png" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="card shadow" style="width:100%;margin-top: 20px;border:0px solid;border-radius:15px;">
+            <img class="card-img-top" src="../static/img/gh.png" alt="Card image cap"
+                 style="border:0px solid;border-radius:15px;">
+            <div class="card-body">
+              <h5 class="card-title">公告</h5>
+              <p class="card-text">这是一条公告</p>
+              <a href="#" class="btn btn-primary">查看更多</a>
+            </div>
+          </div>
+          <div class="shadow" style="margin-top:20px;">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <a class="btn btn-link" type="button" style="width: 100%;" data-toggle="collapse"
+                       data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      天气
+                    </a>
+                  </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                     data-parent="#accordionExample">
+                  <div class="card-body" style="text-align:center;">
+                    <div id="tq" style="width: 100%;height: 100%;">
+                      <div id="he-plugin-standard"></div>
+                    </div>
+                    <script>
+                        WIDGET = {
+                            "CONFIG": {
+                                "layout": "2",
+                                "borderRadius": "15",
+                                "key": "cd01bcb266444486828eae341c28b0f6"
+                            }
+                        }
+                        window.onload = function () {
+                            setWH();
+                        }
+                        window.onresize = function () {
+                            setWH();
+                        }
+                        window.onpageshow = function () {
+                            setWH();
+                        }
+
+                        function setWH() {
+                            var divw = document.getElementById("tq").offsetWidth;
+                            var divh = divw * 1.2;
+                            document.getElementById("he-plugin-standard").style.width = divw + "px";
+                            document.getElementById("he-plugin-standard").style.height = divh + "px";
+                            document.getElementById("container").style.width = divw + "px";
+                            document.getElementById("container").style.height = divh + "px";
+                        }
+                    </script>
+                    <script src="https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0"></script>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <a class="btn btn-link collapsed" type="button" style="width: 100%;" data-toggle="collapse"
+                       data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      地图
+                    </a>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div id="container"></div>
+                    <script type="text/javascript">
+                        var map = new BMap.Map("container");
+                        var point = new BMap.Point(121.39, 30.00);
+                        map.centerAndZoom(point, 12);
+                        map.enableScrollWheelZoom(true);
+                    </script>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card">
+              <div class="card-header" id="">
+                <h2 class="mb-0">
+                  <a class="btn btn-link collapsed" type="button" style="width: 100%;" data-toggle="collapse"
+                     data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    实时热点
+                  </a>
+                </h2>
+              </div>
+              <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
+                   data-parent="#accordionExample">
+                <div class="card-body">
+                  {% for new in news %}
+                    <div class="alert alert-primary" style="padding-left: 5px;padding-right: 3px;" role="alert">
+                      <span class="badge badge-secondary">{{ new.newsindex }}</span><a href="{{ new.newslink }}"
+                                                                                       target="_blank">{{ new.newstitle }}</a>
+                    </div>
+                  {% endfor %}
+                  <button type="button" class="btn btn-success" onclick="location='/more_news/'">更多热点</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-md-none mx-auto"><!--mobile-->
+      {% for article in articles %}
+        <div class="accordion shadow" id="accordionExample{{ article.article_id }}" style=" margin: 8px;">
+          <div class="card">
+            <div class="card-header p-2" id="headingOne{{ article.article_id }}">
+              <h2 class="mb-0">
+                <button class="btn btn-light text-left container-fluid" type="button" data-toggle="collapse"
+                        data-target="#collapseOne{{ article.article_id }}"
+                        aria-expanded="true" aria-controls="collapseOne{{ article.article_id }}">
+                  {% for user in users %}
+                    {% if user.uid == article.user_id %}
+                      <img src="{{ user.tx_link }}" class="float-left img-fluid img-thumbnail rounded-circle"
+                           width="50px"
+                           style="margin-right:5px;"/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;{{ article.article_title }}
+                    {% endif %}
+                  {% endfor %}
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne{{ article.article_id }}" class="collapse"
+                 aria-labelledby="headingOne{{ article.article_id }}"
+                 data-parent="#accordionExample{{ article.article_id }}">
+              <div class="card-body">
+                <a href="/get_article/{{ article.article_id }}" style="text-decoration:none;"><img
+                        class="img-fluid img-thumbnail" src="{{ article.article_url }}" style="height:158px;">
+                  <p class="card-text" style="height: 4rem;">{{ article.text_summ(20)|safe }}...</p></a>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-dark" style="padding: 0px;">
+                    <a id="aaadd{{ article.article_id }}" href="#" onclick="add_article_sc();return false;">
+                      <span id="madd{{ article.article_id }}"
+                            style="padding: 10px;padding-right: 7px;padding-left: 7px;width:4rem;"
+                            class="glyphicon glyphicon-heart-empty text-white"
+                            style="color:#1b1e21;">{{ article.article_sc }}</span>
+                    </a>
+                    <a id="aacut{{ article.article_id }}" style="display: none;" href="#"
+                       onclick="cut_article_sc();return false;">
+                      <span id="mcut{{ article.article_id }}"
+                            style="padding: 10px;padding-right: 7px;padding-left: 7px;width:4rem;"
+                            class="glyphicon glyphicon-heart text-white"
+                            style="color:#1b1e21;">{{ article.article_sc }}</span>
+                    </a>
+                  </button>
+                  <button type="button" class="btn btn-light disabled"><a><span class="glyphicon glyphicon-pencil"
+                                                                                style="color:#1b1e21;">{{ article.article_pl }}</span></a>
+                  </button>
+                  <button type="button" class="btn btn-light disabled"><a><span class="glyphicon glyphicon-eye-open"
+                                                                                style="color:#1b1e21;">{{ article.article_read_cnt }}</span></a>
+                  </button>
+                  <div style="height: 15px;padding: 5px;"><p class="card-text"
+                                                             style="vertical-align: bottom;text-align: end;"><small
+                          class="text-muted">{{ article.article_date }}</small></p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div><!--moble-->
+    <button type="button" id="more" class="btn btn-primary">更多</button>
+  </div>
+  <script>
+      $(function () {
+          $("#more").click(function () {
+              $.post("/", {DATA: this.id}, function (data, status) {
+              });
+              window.location.reload();
+          });
+      });
+  </script>
+
+  {{ super() }}
+  <script>
+
+      window.onload = () => {
+          //获取滚动条距离顶部的距离;
+          function getScrollTop() {
+              let scrollTop = document.documentElement.scrollTop;
+              return scrollTop;
+          }
+
+          //获取可视范围的高度
+          function getClientHeight() {
+              var clientHeight = 0;
+              if (document.body.clientHeight && document.documentElement.clientHeight) {
+                  clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+              } else {
+                  clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+              }
+              return clientHeight;
+          }
+
+          //获取页面高度
+          function getScrollHeight() {
+              var eleHeight;
+              eleHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+              return eleHeight;
+          }
+
+          window.onscroll = () => {
+              getScrollTop();
+              getClientHeight();
+              getScrollHeight();
+              if (getScrollTop() + getClientHeight() == getScrollHeight()) {
+                  $.post("/", {DATA: 'more'}, function (data, status) {
+                  });//向后台传递'more'实现加载数量+8
+                  window.location.reload();//刷新页面
+              }
+          }
+      }
+
+
+      var sc = document.getElementById(event.target.id).innerText;
+
+      function add_article_sc() {
+          var spanid = event.target.id;
+          var iframe = document.createElement('iframe');
+          if (spanid.charAt(0) == 'p') {
+              document.getElementById("pcut" + spanid.replace('padd', '')).innerText = parseInt(document.getElementById("pcut" + spanid.replace('padd', '')).innerText) + 1
+              document.getElementById(spanid).innerText = parseInt(document.getElementById(spanid).innerText) + 1
+              document.getElementById("aadd" + spanid.replace('padd', '')).style.display = "none";
+              document.getElementById("acut" + spanid.replace('padd', '')).style.display = "block";
+              iframe.src = "/add_article_sc/" + spanid.replace('padd', '');
+          }
+          if (spanid.charAt(0) == 'm') {
+              document.getElementById("mcut" + spanid.replace('madd', '')).innerText = parseInt(document.getElementById("mcut" + spanid.replace('madd', '')).innerText) + 1
+              document.getElementById(spanid).innerText = parseInt(document.getElementById(spanid).innerText) + 1
+              document.getElementById("aaadd" + spanid.replace('madd', '')).style.display = "none";
+              document.getElementById("aacut" + spanid.replace('madd', '')).style.display = "block";
+              iframe.src = "/add_article_sc/" + spanid.replace('madd', '');
+          }
+          document.body.appendChild(iframe);
+          window.focus();
+      }
+
+      function cut_article_sc() {
+          var spanid = event.target.id;
+          var iframe2 = document.createElement('iframe');
+          if (document.getElementById(spanid).innerText >= 1) {
+              if (spanid.charAt(0) == 'p') {
+                  document.getElementById("padd" + spanid.replace('pcut', '')).innerText = parseInt(document.getElementById("padd" + spanid.replace('pcut', '')).innerText) - 1
+                  document.getElementById(spanid).innerText = parseInt(document.getElementById(spanid).innerText) - 1
+                  document.getElementById("acut" + spanid.replace('pcut', '')).style.display = "none";
+                  document.getElementById("aadd" + spanid.replace('pcut', '')).style.display = "block";
+                  iframe2.src = "/cut_article_sc/" + spanid.replace('pcut', '');
+              }
+              if (spanid.charAt(0) == 'm') {
+                  document.getElementById("madd" + spanid.replace('mcut', '')).innerText = parseInt(document.getElementById("madd" + spanid.replace('mcut', '')).innerText) - 1
+                  document.getElementById(spanid).innerText = parseInt(document.getElementById(spanid).innerText) - 1
+                  document.getElementById("aacut" + spanid.replace('mcut', '')).style.display = "none";
+                  document.getElementById("aaadd" + spanid.replace('mcut', '')).style.display = "block";
+                  iframe2.src = "/cut_article_sc/" + spanid.replace('mcut', '');
+              }
+              document.body.appendChild(iframe2);
+              window.focus();
+          }
+      }
+  </script>
+{% endblock %}

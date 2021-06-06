@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container" style="padding-top: 90px;">
+    <style>
+        .figure img {
+            max-width: 500px;
+            _width: 500px;
+        }
+    </style>
+      <div class="img_main float-right"
+           style="text-align: center;overflow: hidden;width: 180px;height: 180px;border:0px solid;border-radius:15px;">
+        <img class="blog_img" src="{{ article.article_url }}" alt="Card image cap"
+             style="height: 100%;width: auto;"><!--帖子头图-->
+      </div>
+      <h3>{{ article.article_title }}</h3><!--帖子标题-->
+      <p>
+          <span><a href="/user_more/{{ article.user_id }}"><span
+                  class="glyphicon glyphicon-user"></span>{{ account }}&nbsp;&nbsp;</a></span><!--楼主消息-->
+        <span class="glyphicon glyphicon-time"></span>{{ article.article_date }}&nbsp;&nbsp;<!--帖子发布时间-->
+        <span class="glyphicon glyphicon-eye-open"></span>浏览({{ article.article_read_cnt }})&nbsp;&nbsp;<!--帖子浏览量-->
+        <span><a><span
+                class="glyphicon glyphicon-star"></span>喜欢({{ article.article_sc }})&nbsp;&nbsp;</a></span><!--帖子点赞-->
+        <span><span
+                class="glyphicon glyphicon-comment"></span>评论({{ article.article_pl }})&nbsp;&nbsp;</span><!--帖子评论数-->
+      </p>
+      <hr>
+
+    <figure class="figure">
+
+      <figcaption class="figure-caption">{{ article.article_summary|safe }}</figcaption><!--帖子正文-->
+    </figure>
+    <form role="form" action="/add_comment/{{ article.article_id }}" method="post"><!--帖子评论框-->
+      <div class="form-group">
+        <hr>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" name="commentary" rows="3" placeholder="说点什么吧 "></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">发表评论</button>
+      </div>
+    </form>
+    <br>
+    <br>
+    <div class="list-group">
+      <div class="alert alert-info" role="alert">
+        <h4 class="list-group-item-heading">
+          评论列表
+        </h4>
+      </div>
+
+      {% for comment in comments %}
+        <div href="#" class="list-group-item">
+          <p>#{{ loop.index }}楼 {{ comment.comment_date }} {{ comment.comment_name }} </p>
+          <p>
+            {{ comment.comment_text|safe }}
+          <p class="label"><a href="/comment_support/{{ comment.comment_id }}">支持({{ comment.comment_support }})</a>
+          </p>
+          <p class="label"><a href="/comment_oppose/{{ comment.comment_id }}">反对({{ comment.comment_oppose }})</a>
+          </p>
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  <p>{{ tip }}</p>
+
+
+
+  {{ super() }}
+
+{% endblock %}

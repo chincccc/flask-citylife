@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+      <h1>{{ type }}</h1>
+      {% for new in news %}
+        <div class="alert alert-primary" style="padding-left: 5px;padding-right: 3px;" role="alert">
+          <span class="badge badge-secondary">{{ new.newsindex }}</span><a href="{{ new.newslink }}" target="_blank">{{ new.newstitle }}</a><span class="float-right">{{ new.newswatch }}</span>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

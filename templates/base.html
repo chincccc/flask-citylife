@@ -1,0 +1,130 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}阿拉宁波{% endblock %}
+
+{% block metas %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+{% endblock metas %}
+
+{% block styles %}
+  {{ super() }}
+
+
+  <link type="text/css" href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/waifu.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}" media='all'/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker.css') }}" media='all'/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-datepicker.min.css.css') }}" media='all'/>
+
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="{{ url_for('static', filename='assets/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap-datepicker.zh-CN.min.js') }}"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=YrIiGkKSpH6cBSN8lDbXBMcjQ9kUtLcP"></script>
+
+  <script src="../static/js/eition_crop_avatars.1.2_mini.js"></script>
+  <style>
+      .eitionCss {
+          background: #f9f9f9;
+          position: relative;
+          background-repeat: no-repeat;
+          background-size: 100%;
+          background-position-x: 50%;
+          background-position-y: 0;
+      }
+
+      .drag {
+          background: #ffffff;
+          border: 1px solid #000;
+          opacity: 0.4;
+          position: absolute
+      }
+  </style>
+
+
+{% endblock styles %}
+
+
+
+{% block body -%}
+  {% include "/base/navbar.html" %}
+  <div class="container-fluid" style="margin: 0px;padding: 0px;">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">帐号登出</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            您正在进行登出操作，是否继续？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <a href="{{ url_for('main.login_out') }}" class="btn btn-danger">确认登出</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="d-none d-md-block" style="padding-top:18px;"></div>
+    <div class="container">
+      <div class="alert alert-light shadow-lg" role="alert"
+           style="margin:20px 0px 20px 0px;border:0px solid;border-radius:15px;padding-bottom: 30px;">
+        <div class="row" style="padding: 20px;">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+      <div style="height: 20px;"></div>
+    </div>
+  </div>
+
+  <div class="d-none d-md-block"
+       style="position:fixed;z-index:101;right:0;bottom:0;margin-bottom: 70px;width: 40px;margin: 20px;">
+    <button type="button" class="btn btn-secondary shadow" style="margin-bottom: 10px;" onclick="location='#'">^
+    </button>
+    <button type="button" class="btn btn-success shadow" onclick="location='/add_article/'">+</button>
+  </div>
+
+  <div class="waifu d-none d-lg-block">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+      <span class="fui-chat"></span>
+      <span class="fui-home"></span>
+      <span class="fui-user"></span>
+      <span class="fui-photo"></span>
+      <span class="fui-cross"></span>
+    </div>
+  </div>
+
+  <script src="../static/assets/waifu-tips.js"></script>
+  <script src="../static/assets/live2d.js"></script>
+  <script type="text/javascript">initModel("../static/assets/")</script>
+  <script src="../static/js/slide.js"></script>
+
+  <div style="height: 0px;background-color:transparent;"></div>
+  {% include "/base/footer.html" %}
+
+  {% block scripts %}
+    {{ super() }}
+    <script>
+        document.onreadystatechange = subSomething;
+
+        function subSomething() {
+            if (document.readyState == "interactive") {
+            }
+        }
+    </script>
+  {% endblock scripts %}
+
+{% endblock body %}
+

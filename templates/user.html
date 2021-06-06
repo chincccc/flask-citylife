@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <img src="{{ user.tx_link }}" class="float-left img-fluid rounded-circle" width="70px"
+           style="margin-right:10px;"/>{% if flag > -1 %}<br><button type="button" class="btn btn-primary float-right" onclick="location='/chat/{{ user.uid }}'" >私信他</button>{% endif %}
+      {{ wtf.quick_form(form) }}
+        {% if flag == -1 %}
+            <a href="/user_change/">修改个人信息</a>
+            <a href="/pass_change/">修改密码</a>
+        {% elif flag < -1 %}
+          <br>
+        {% elif flag == 0 %}
+          <a href="/follow/{{ user.uid }}">关注ta</a>
+        {% else %}
+          {% for myfollow in myfollows %}
+            {% if myfollow.receive_id == user.uid %}
+              <a href="/unfollow/{{ myfollow.follow_id }}">取消关注ta</a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+  {{ ckeditor.load() }}
+  {{ ckeditor.config(name='body') }}
+  {{ super() }}
+{% endblock %}

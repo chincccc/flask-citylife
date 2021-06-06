@@ -1,0 +1,48 @@
+*{
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    cursor: url(../img/base/miku1.png), auto;
+}
+.main_ra{
+    position: relative;
+    background: #fff;
+    margin: -60px 15px 0;
+}
+.img_main{
+    border: 0px;
+    overflow: hidden;
+}
+.img_main img{
+    transition: all 0.6s;
+    vertical-align: middle;
+}
+.img_main img:hover{
+    transform: scale(1.2);
+}
+.card-body .card-title a{
+    font-size: 18px;
+    color: #3c4858;
+    text-decoration: none;
+    word-wrap: break-word;
+}
+.card a p{
+    padding-left: 10px;
+    font-size: 15px;
+    color: #3c4858;
+    text-decoration: none;
+    word-wrap: break-word;
+}
+html,body{margin:0px;height: 100%;}
+body {
+	height: 100%;
+	background-image: url(/static/img/base/background.jpg);
+    background-position: right center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
