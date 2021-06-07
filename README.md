@@ -12,7 +12,7 @@
 
 2.安装各模块
 
-3.打开模块安装目录(site-packages內)将flask_bootstrap.zip解压，对site-packages內flask_bootstrap进行替换，也可仅替换flask_bootstrap目录下的static文件夹
+3.将flask_bootstrap.zip解压，复制解压后里面static文件夹，打开Python模块安装目录(site-packages內)找到其中的flask_bootstrap文件夹，将static文件夹替换为刚才复制的。
 
 4.打开config.py修改数据库配置
 
