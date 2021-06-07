@@ -1,3 +1,3 @@
 # citylife
 基于flask的同城本地信息平台
-![Image text](https://github.com/chincccc/citylife/master/pic/1.png)
+![Image text](https://github.com/chincccc/citylife/blob/main/pic/1.png)
