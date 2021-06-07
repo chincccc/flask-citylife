@@ -25,8 +25,8 @@ def getnowtime(type='cn'):
 def send_email(yzm, user_email, test=0):
     if test == 1:
         return True
-    from_addr = 'chin.cc@qq.com' #改你自己的
-    qqCode = 'veymcubkjzpvbfej' #改你自己的
+    from_addr = 'chin.cc@qq.com' #改自己的邮箱
+    qqCode = 'vey**********fej' #改自己的邮箱口令
     smtp_server = 'smtp.qq.com'
     smtp_port = 465
     stmp = smtplib.SMTP_SSL(smtp_server, smtp_port)
