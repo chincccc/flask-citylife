@@ -1,16 +1,27 @@
 # citylife
 基于flask的同城本地信息平台，毕业设计。
+
 本项目支持布局自适应移动设备，但自适应是在bootstrap3的时候适配的，后期项目改用bootstrap4部分页面或功能未做自适应适配。
+
 注册采用邮箱验证方式，杜绝机器人。
 
+
 食用方法：
+
 1.建citylife数据库，导入sql文件
+
 2.安装各模块
+
 3.打开模块安装目录(site-packages內)将flask_bootstrap.zip解压，对site-packages內flask_bootstrap进行替换，也可仅替换flask_bootstrap目录下的static文件夹
+
 4.打开config.py修改数据库配置
+
 5.打开apps/tools/other_tool.py修改其中的send_email函数from_addr与qqCode变量，前者为邮箱后者为密码口令
+
 6.运行app.py不出意外应该是能正常运行了
+
 *有问题请联系chin.cc@outlook.in
+
 
 首页，支持触底刷新更多
 ![Image text](https://github.com/chincccc/citylife/blob/main/pic/1.png)
