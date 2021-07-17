@@ -1,5 +1,5 @@
 # citylife
-基于flask的同城本地信息平台，毕业设计。示例搭建在阿里云上，带宽就1m有点慢：http://city.chincc.top:5000/
+基于flask的同城本地信息平台，毕业设计。示例搭建在阿里云上，带宽就1m有点慢：http://city.chincc.top
 
 本项目支持布局自适应移动设备，但自适应是在bootstrap3的时候适配的，后期项目改用bootstrap4部分页面或功能未做自适应适配。
 
