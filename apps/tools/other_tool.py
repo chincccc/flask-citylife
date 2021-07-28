@@ -12,15 +12,15 @@ import requests
 
 
 def getnowtime(type='cn'):
-    if type == '/':
-        return str(datetime.datetime.now().strftime('%Y/%m/%d/%H/%M'))
     if type == '':
         return str(datetime.datetime.now().strftime('%y%m%d%H%M'))
-    if type == 'cn':
+    elif type == 'cn':
         return str(datetime.datetime.now().strftime('%Y年%m月%d日 %H:%M'))
-    if type == '-':
-        return str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
-
+    #elif type == '/':
+        #return str(datetime.datetime.now().strftime('%Y/%m/%d/%H/%M'))
+    else:
+        t=str(datetime.datetime.now().strftime('%Y_%m_%d %H:%M')).replace('_',type)
+        return t
 
 def send_email(yzm, user_email, test=0):
     if test == 1:
