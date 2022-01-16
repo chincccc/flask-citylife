@@ -12,7 +12,7 @@
 
 1.建citylife数据库，导入sql文件
 
-2.安装各模块
+2.安装各模块（ pip3 install -r requirements.txt ）
 
 3.将flask_bootstrap.zip解压，复制解压后里面static文件夹，打开Python模块安装目录(site-packages內)找到其中的flask_bootstrap文件夹，将static文件夹替换为刚才复制的。
 
